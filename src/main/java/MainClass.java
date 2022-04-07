@@ -30,7 +30,8 @@ public class MainClass {
         NAMEFILESECOND = in.nextLine();
         arrayFirst = getDataTable(NAMEFILEFIRST, NAMEFIRSTFILEONE, NAMESECONDFILEONE);
         arraySecond = getDataTable(NAMEFILESECOND, NAMEFIRSTFILETWO, NAMESECONDFILETWO);
-        isNewMaterial(arrayFirst, arraySecond);
+        isNewMaterial(arrayFirst, arraySecond, "в отчете о сверке");
+        isNewMaterial(arraySecond, arrayFirst, "в отчете об остатках");
 
     }
   public static  ArrayList<Double> [] getDataTable(String nameFile,String nameFirst, String nameSecond) throws IOException {
@@ -87,7 +88,7 @@ public class MainClass {
 
       return arrayToReturn;
     }
-    public static void isNewMaterial (ArrayList<Double>[] arrayFirst,ArrayList<Double>[] arraySecond) {
+    public static void isNewMaterial (ArrayList<Double>[] arrayFirst,ArrayList<Double>[] arraySecond, String message) {
         boolean isThisMaterial;
         for (int i = 0; i < arraySecond[0].size(); i++) {
             isThisMaterial =false;
@@ -99,11 +100,12 @@ public class MainClass {
                     }
                 }
                 if (isThisMaterial == false) {
-                    System.out.println("нет материала " + arraySecond[0].get(i) + " в отчете о сверке");
+                    System.out.println("нет материала " + arraySecond[0].get(i) + " " + message);
                 }
             }
 
 
         }
     }
+
 }
