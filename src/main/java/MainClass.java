@@ -17,28 +17,20 @@ public class MainClass {
         final String NAMEFILESECOND;
         final String NAMEFIRSTFILEONE = "Материал";
         final String NAMESECONDFILEONE = "Сумма в ВВ";
-        final String NAMEFIRSTFILETWO ="Материал";
-        final String NAMESECONDFILETWO ="ОбщСтоим(ср)";
-        double sumOne =0;
-        double sumTwo =0;
-        ArrayList<Double> [] arrayFirst = new ArrayList[2];
-        ArrayList<Double> [] arraySecond = new ArrayList[2];
+        final String NAMEFIRSTFILETWO = "Материал";
+        final String NAMESECONDFILETWO = "ОбщСтоим(ср)";
+        double sumOne = 0;
+        double sumTwo = 0;
+        ArrayList<Double>[] arrayFirst;
+        ArrayList<Double>[] arraySecond;
         System.out.println("Введите путь к файлу Отчет для сверки");
         Scanner in = new Scanner(System.in);
         NAMEFILEFIRST = in.nextLine();
         System.out.println("Введите путь к файлу Отчет по остаткам");
         NAMEFILESECOND = in.nextLine();
-        arrayFirst = getDataTable(NAMEFILEFIRST,NAMEFIRSTFILEONE, NAMESECONDFILEONE);
-        arraySecond = getDataTable(NAMEFILESECOND,NAMEFIRSTFILETWO, NAMESECONDFILETWO);
-
-        for (int i = 0; i < arrayFirst[1].size(); i++) {
-            sumOne += arrayFirst[1].get(i);
-        }
-        for (int i = 0; i < arraySecond[1].size(); i++) {
-            sumTwo += arraySecond[1].get(i);
-        }
-        System.out.println(sumOne + "  " +sumTwo);
-
+        arrayFirst = getDataTable(NAMEFILEFIRST, NAMEFIRSTFILEONE, NAMESECONDFILEONE);
+        arraySecond = getDataTable(NAMEFILESECOND, NAMEFIRSTFILETWO, NAMESECONDFILETWO);
+        isNewMaterial(arrayFirst, arraySecond);
 
     }
   public static  ArrayList<Double> [] getDataTable(String nameFile,String nameFirst, String nameSecond) throws IOException {
@@ -94,5 +86,24 @@ public class MainClass {
       arrayToReturn[1] = list2;
 
       return arrayToReturn;
+    }
+    public static void isNewMaterial (ArrayList<Double>[] arrayFirst,ArrayList<Double>[] arraySecond) {
+        boolean isThisMaterial;
+        for (int i = 0; i < arraySecond[0].size(); i++) {
+            isThisMaterial =false;
+            if (arraySecond[1].get(i) != 0) {
+                for (int j = 0; j < arrayFirst[0].size(); j++) {
+                    if (arrayFirst[0].get(j).equals(arraySecond[0].get(i))) {
+                        isThisMaterial =true;
+                        break;
+                    }
+                }
+                if (isThisMaterial == false) {
+                    System.out.println("нет материала " + arraySecond[0].get(i) + " в отчете о сверке");
+                }
+            }
+
+
+        }
     }
 }
